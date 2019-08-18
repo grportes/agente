@@ -1,0 +1,6 @@
+https://stackoverflow.com/questions/46990525/problems-with-dialect-sqlite-3-with-hibernate-5?rq=1
+
+https://www.devmedia.com.br/trabalhando-com-completablefuture-no-java/32854
+
+// FX, Guice and etc...
+https://www.youtube.com/channel/UCrgOYeQyZ_V62XDYKCfh8TQ/playlists

@@ -1,0 +1,25 @@
+cd /tmp && mkdir pbatch && cd pbatch && sqlite3 agente.db
+
+drop table plb_escalonamentos;
+
+create table plb_escalonamentos (
+    id integer not null PRIMARY KEY AUTOINCREMENT,
+    titulo varchar(100) not null,
+    url varchar(100) not null,
+    data_execucao integer not null,
+    tempo_processamento integer not null
+);
+
+insert into plb_escalonamentos( titulo, url, data_execucao, tempo_processamento ) values ( "SERVICO 1", "108", strftime('%s', DateTime('2019-08-18T15:40')), 6 );
+insert into plb_escalonamentos( titulo, url, data_execucao, tempo_processamento ) values ( "SERVICO 2", "109", strftime('%s', DateTime('2019-08-18T15:50')), 4 );
+insert into plb_escalonamentos( titulo, url, data_execucao, tempo_processamento ) values ( "SERVICO 3", "109", strftime('%s', DateTime('2019-08-18T15:55')), 1 );
+insert into plb_escalonamentos( titulo, url, data_execucao, tempo_processamento ) values ( "SERVICO 4", "109", strftime('%s', DateTime('2019-08-18T15:55')), 1 );
+insert into plb_escalonamentos( titulo, url, data_execucao, tempo_processamento ) values ( "SERVICO 5", "109", strftime('%s', DateTime('2019-08-18T15:55')), 8 );
+insert into plb_escalonamentos( titulo, url, data_execucao, tempo_processamento ) values ( "SERVICO 6", "109", strftime('%s', DateTime('2019-08-18T15:55')), 9 );
+insert into plb_escalonamentos( titulo, url, data_execucao, tempo_processamento ) values ( "SERVICO 7", "109", strftime('%s', DateTime('2019-08-18T15:55')), 5 );
+insert into plb_escalonamentos( titulo, url, data_execucao, tempo_processamento ) values ( "SERVICO 8", "109", strftime('%s', DateTime('2019-08-18T15:55')), 3 );
+insert into plb_escalonamentos( titulo, url, data_execucao, tempo_processamento ) values ( "SERVICO 9", "109", strftime('%s', DateTime('2019-08-18T15:55')), 6 );
+
+select * from plb_escalonamentos;
+
+.exit
