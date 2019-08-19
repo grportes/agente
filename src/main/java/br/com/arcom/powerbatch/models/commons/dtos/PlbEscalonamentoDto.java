@@ -1,7 +1,10 @@
 package br.com.arcom.powerbatch.models.commons.dtos;
 
+import br.com.arcom.powerbatch.models.commons.constantes.StatusProcessamento;
+
 import java.util.Objects;
 
+import static br.com.arcom.powerbatch.models.commons.constantes.StatusProcessamento.AGUARDANDO;
 import static java.lang.String.format;
 
 public class PlbEscalonamentoDto {
@@ -10,7 +13,7 @@ public class PlbEscalonamentoDto {
     private final String titulo;
     private final String url;
     private final Short tempoProcessamento;
-    private final String status;
+    private final StatusProcessamento status;
 
     @Deprecated
     public PlbEscalonamentoDto(
@@ -24,13 +27,13 @@ public class PlbEscalonamentoDto {
         this.titulo = titulo;
         this.url = url;
         this.tempoProcessamento = tempoProcessamento;
-        this.status = "";
+        this.status = AGUARDANDO;
     }
 
     @Deprecated
     public PlbEscalonamentoDto(
         final PlbEscalonamentoDto dto,
-        final String status
+        final StatusProcessamento status
     ) {
 
         this.id = dto.getId();
@@ -56,7 +59,7 @@ public class PlbEscalonamentoDto {
         return tempoProcessamento;
     }
 
-    public String getStatus() {
+    public StatusProcessamento getStatus() {
         return status;
     }
 

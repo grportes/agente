@@ -4,6 +4,7 @@ import br.com.arcom.powerbatch.models.commons.dtos.PlbEscalonamentoDto;
 import br.com.arcom.powerbatch.models.repository.PlbEscalonamentoRepository;
 import br.com.arcom.powerbatch.services.AgenteTimerService;
 import com.google.inject.Inject;
+import com.google.inject.persist.Transactional;
 
 import java.util.List;
 import java.util.TimerTask;
@@ -12,7 +13,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import static java.lang.String.format;
+import static br.com.arcom.powerbatch.models.commons.constantes.StatusProcessamento.EXECUCAO;
+import static br.com.arcom.powerbatch.models.commons.constantes.StatusProcessamento.FINALIZADO;
 import static java.util.Objects.isNull;
 
 public class AgenteTimerServiceImpl
@@ -59,8 +61,21 @@ public class AgenteTimerServiceImpl
         System.out.println("---------------------------------------------------------------------------");
 
         for ( final PlbEscalonamentoDto task : tasks ) {
-
             qtQueueExecucao.incrementAndGet();
+            createTask( task );
+        }
+    }
+
+    @Transactional
+    private void createTask( final PlbEscalonamentoDto task ) {
+
+        boolean reservouProcesso = plbEscalonamentoRepository.atualizarStatus(
+            task.getId(),
+            task.getStatus(),
+            EXECUCAO
+        );
+
+        if ( reservouProcesso ) {
 
             final CompletableFuture<PlbEscalonamentoDto> future = new CompletableFuture<>();
 
@@ -81,13 +96,23 @@ public class AgenteTimerServiceImpl
                 }
                 return null;
             });
+
         }
+
     }
 
+    @Transactional
     private PlbEscalonamentoDto execTask( final PlbEscalonamentoDto task ) throws InterruptedException {
 
         System.out.printf(" [%s - INICIANDO] %n", task );
         Thread.sleep(task.getTempoProcessamento() * 10000);
-        return new PlbEscalonamentoDto(task, "Processado!");
+
+        plbEscalonamentoRepository.atualizarStatus(
+            task.getId(),
+            task.getStatus(),
+            FINALIZADO
+        );
+
+        return new PlbEscalonamentoDto(task, FINALIZADO);
     }
 }

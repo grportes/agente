@@ -18,6 +18,19 @@
         ,   tempo_processamento
         from
             plb_escalonamentos
+        where
+            status = 1
+
+        ]]></query>
+    </named-native-query>
+
+    <named-native-query name="PlbEscalonamento.atualizarStatus">
+        <query><![CDATA[
+
+        update  plb_escalonamentos
+        set     status  =   :statusNovo
+        where   id      =   :id
+        and     status  =   :statusAnterior
 
         ]]></query>
     </named-native-query>
