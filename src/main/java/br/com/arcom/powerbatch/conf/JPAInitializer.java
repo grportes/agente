@@ -5,10 +5,10 @@ import com.google.inject.Singleton;
 import com.google.inject.persist.PersistService;
 
 @Singleton
-public class ApplicationStart {
+public class JPAInitializer {
 
     @Inject
-    public ApplicationStart( final PersistService persistService ) {
+    public JPAInitializer(final PersistService persistService ) {
 
         persistService.start();
     }

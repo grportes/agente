@@ -1,13 +1,16 @@
 package br.com.arcom.powerbatch.models.repository;
 
 import br.com.arcom.powerbatch.models.commons.constantes.StatusProcessamento;
-import br.com.arcom.powerbatch.models.commons.dtos.PlbEscalonamentoDto;
+import br.com.arcom.powerbatch.models.domains.PlbEscalonamento;
 
 import java.util.List;
 
 public interface PlbEscalonamentoRepository {
 
-    List<PlbEscalonamentoDto> buscarTarefas( int qtde );
+    List<PlbEscalonamento> buscarTarefas(
+        final StatusProcessamento statusProcessamento,
+        final int qtde
+    );
 
     boolean atualizarStatus(
         final Long id,

@@ -18,7 +18,7 @@
             <property name="javax.persistence.jdbc.user" value="sa" />
             <property name="javax.persistence.jdbc.password" value="" />
 
-            <property name="hibernate.dialect" value="org.hibernate.dialect.SQLiteDialect"/>
+            <property name="hibernate.dialect" value="br.com.arcom.powerbatch.infra.dialect.AgenteSQLiteDialect"/>
             <property name="hibernate.show_sql" value="true" />
             <property name="format_sql" value="true" />
 

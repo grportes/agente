@@ -7,10 +7,25 @@ import static java.util.Objects.isNull;
 
 public enum StatusProcessamento {
 
+    /**
+     * 1
+     */
     AGUARDANDO((short) 1),
+
+    /**
+     * 2
+     */
     EXECUCAO((short) 2),
+
+    /**
+     * 3
+     */
     ERRO((short) 3),
-    FINALIZADO((short) 3)
+
+    /**
+     * 4
+     */
+    FINALIZADO((short) 4)
     ;
 
     private Short value;

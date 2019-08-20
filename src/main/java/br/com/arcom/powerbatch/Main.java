@@ -4,7 +4,6 @@ import br.com.arcom.powerbatch.conf.Module;
 import br.com.arcom.powerbatch.services.AgenteTimerService;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import com.google.inject.persist.jpa.JpaPersistModule;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -13,10 +12,7 @@ public final class Main {
 
     public static void main(String[] args) {
 
-        Injector injector = Guice.createInjector(
-            new Module(),
-            new JpaPersistModule("agenteJpaUnit"
-            ));
+        Injector injector = Guice.createInjector( new Module() );
 
         AgenteTimerService service = injector.getInstance(AgenteTimerService.class);
 

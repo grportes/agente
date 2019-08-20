@@ -1,47 +1,29 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <entity-mappings
-        xmlns="http://xmlns.jcp.org/xml/ns/persistence/orm"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence/orm http://xmlns.jcp.org/xml/ns/persistence/orm_2_1.xsd"
-        version="2.1">
+    xmlns="http://xmlns.jcp.org/xml/ns/persistence/orm"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence/orm http://xmlns.jcp.org/xml/ns/persistence/orm_2_1.xsd"
+    version="2.1"
+>
 
-    <named-native-query
-        name="PlbEscalonamento.buscarTarefas"
-        result-set-mapping="PlbEscalonamento.buscarTarefas"
-    >
+    <named-query name="PlbEscalonamento.buscarTarefas">
         <query><![CDATA[
 
-        select
-            id
-        ,   titulo
-        ,   url
-        ,   tempo_processamento
-        from
-            plb_escalonamentos
-        where
-            status = 1
+        from    PlbEscalonamento
+        where   status = :status
 
         ]]></query>
-    </named-native-query>
+    </named-query>
 
-    <named-native-query name="PlbEscalonamento.atualizarStatus">
+    <named-query name="PlbEscalonamento.atualizarStatus">
         <query><![CDATA[
 
-        update  plb_escalonamentos
+        update  PlbEscalonamento
         set     status  =   :statusNovo
         where   id      =   :id
         and     status  =   :statusAnterior
 
         ]]></query>
-    </named-native-query>
-
-    <sql-result-set-mapping name="PlbEscalonamento.buscarTarefas">
-        <constructor-result target-class="br.com.arcom.powerbatch.models.commons.dtos.PlbEscalonamentoDto">
-            <column name="id" class="java.lang.Long"/>
-            <column name="titulo" class="java.lang.String"/>
-            <column name="url" class="java.lang.String"/>
-            <column name="tempo_processamento" class="java.lang.Short"/>
-        </constructor-result>
-    </sql-result-set-mapping>
+    </named-query>
 
 </entity-mappings>

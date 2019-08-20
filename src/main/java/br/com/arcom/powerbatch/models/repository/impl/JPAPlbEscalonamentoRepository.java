@@ -1,7 +1,7 @@
 package br.com.arcom.powerbatch.models.repository.impl;
 
 import br.com.arcom.powerbatch.models.commons.constantes.StatusProcessamento;
-import br.com.arcom.powerbatch.models.commons.dtos.PlbEscalonamentoDto;
+import br.com.arcom.powerbatch.models.domains.PlbEscalonamento;
 import br.com.arcom.powerbatch.models.domains.PlbHistorico;
 import br.com.arcom.powerbatch.models.repository.PlbEscalonamentoRepository;
 import br.com.arcom.powerbatch.models.repository.PlbHistoricoRepository;
@@ -10,8 +10,6 @@ import com.google.inject.Inject;
 import javax.persistence.EntityManager;
 import java.time.LocalDateTime;
 import java.util.List;
-
-import static br.com.arcom.powerbatch.models.commons.constantes.StatusProcessamento.getValor;
 
 public class JPAPlbEscalonamentoRepository implements PlbEscalonamentoRepository {
 
@@ -31,10 +29,14 @@ public class JPAPlbEscalonamentoRepository implements PlbEscalonamentoRepository
     }
 
     @Override
-    public List<PlbEscalonamentoDto> buscarTarefas( int qtde ) {
+    public List<PlbEscalonamento> buscarTarefas(
+        final StatusProcessamento statusProcessamento,
+        final int qtde
+    ) {
 
         return em
-            .createNamedQuery("PlbEscalonamento.buscarTarefas", PlbEscalonamentoDto.class )
+            .createNamedQuery("PlbEscalonamento.buscarTarefas", PlbEscalonamento.class )
+            .setParameter( "status", statusProcessamento )
             .setMaxResults( qtde )
             .getResultList();
     }
@@ -46,13 +48,11 @@ public class JPAPlbEscalonamentoRepository implements PlbEscalonamentoRepository
         final StatusProcessamento statusNovo
     ) {
 
-        em.getTransaction().begin();
-
         boolean atualizou = em
             .createNamedQuery("PlbEscalonamento.atualizarStatus" )
             .setParameter("id", id )
-            .setParameter("statusAnterior", getValor(statusAnterior) )
-            .setParameter("statusNovo", getValor(statusNovo) )
+            .setParameter("statusAnterior", statusAnterior )
+            .setParameter("statusNovo", statusNovo )
             .executeUpdate() == 1;
 
         if ( atualizou ) {
@@ -63,8 +63,6 @@ public class JPAPlbEscalonamentoRepository implements PlbEscalonamentoRepository
             plbHistorico.setDescricao("Tarefa: " + id);
             plbHistoricoRepository.save( plbHistorico );
         }
-
-        em.getTransaction().commit();
 
         return atualizou;
     }
