@@ -1,14 +1,14 @@
-package br.com.arcom.powerbatch.conf;
+package br.com.arcom.powerbatch.services;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.google.inject.persist.PersistService;
 
 @Singleton
-public class JPAInitializer {
+public class JPAInitializerService {
 
     @Inject
-    public JPAInitializer(final PersistService persistService ) {
+    public JPAInitializerService( final PersistService persistService ) {
 
         persistService.start();
     }
