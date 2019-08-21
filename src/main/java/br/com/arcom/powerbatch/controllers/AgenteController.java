@@ -6,6 +6,7 @@ import com.google.inject.Inject;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.util.Pair;
 
 import javax.persistence.EntityManager;
@@ -21,6 +22,8 @@ import static br.com.arcom.powerbatch.models.commons.constantes.StatusProcessame
 import static br.com.arcom.powerbatch.models.commons.constantes.StatusProcessamento.ERRO;
 import static br.com.arcom.powerbatch.models.commons.constantes.StatusProcessamento.EXECUCAO;
 import static br.com.arcom.powerbatch.models.commons.constantes.StatusProcessamento.FINALIZADO;
+import static java.lang.String.format;
+import static java.lang.String.valueOf;
 
 public class AgenteController extends TimerTask {
 
@@ -39,8 +42,11 @@ public class AgenteController extends TimerTask {
     private Timer timer = new Timer();
 
     // UI - Controles
-    @FXML
-    private Button btnPrincipal;
+    @FXML private Button btnPrincipal;
+    @FXML private TextField txtMaxThreads;
+    @FXML private TextField txtEmExecucao;
+    @FXML private TextField txtDisponivel;
+    @FXML private TextField txtMsg;
 
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -69,35 +75,28 @@ public class AgenteController extends TimerTask {
     public void handleBtnPrincipal( final ActionEvent actionEvent ) {
 
         btnPrincipal.setText("Cancelar");
-        btnPrincipal.setDisable(true);
-
         timer.schedule(this, 0 , 5000 );
-
     }
 
     @Override
     public void run() {
 
-        System.out.println("---------------------------------------------------------------------------");
-        System.out.printf("Queues em execução: %s%n", qtQueueExecucao.get());
+        txtMaxThreads.setText( valueOf(MAX_QUEUES) );
+        txtEmExecucao.setText( valueOf(qtQueueExecucao.get()) );
 
         int qtQueuesDisponiveis = MAX_QUEUES - qtQueueExecucao.get();
-        System.out.printf("Queues disponiveis: %s%n", qtQueuesDisponiveis);
-        if (qtQueuesDisponiveis == 0) {
-            System.out.println("Não vamos agendar!!");
-            System.out.println("---------------------------------------------------------------------------");
+        txtDisponivel.setText( valueOf(qtQueuesDisponiveis) );
+
+        if ( qtQueuesDisponiveis == 0 ) {
+            txtMsg.setText( "EM PROCESSAMENTO....");
             return;
         }
 
         List<PlbEscalonamento> tasks = escalonamentoRepository.buscarTarefas( AGUARDANDO, qtQueuesDisponiveis );
         if ( tasks.isEmpty() ) {
-            System.out.println("Sem tarefas!!!!");
-            System.out.println("---------------------------------------------------------------------------");
+            txtMsg.setText( "SEM TAREFAS PARA DISPARAR!!");
             return;
         }
-
-        System.out.printf("Tasks para processar [%s]%n", tasks.size());
-        System.out.println("---------------------------------------------------------------------------");
 
         for ( final PlbEscalonamento task : tasks ) {
 
@@ -117,9 +116,9 @@ public class AgenteController extends TimerTask {
 
                 CompletableFuture.supplyAsync( () -> {
                     try {
-                        System.out.printf(" [%s - %s] - INICIO PROCESSAMENTO %n", task.getId(), task.getUrl() );
+                        txtMsg.setText( format( " [%s - %s] - INICIO PROCESSAMENTO %n", task.getId(), task.getUrl() ) );
                         Thread.sleep(task.getTempoProcessamento() * 10000);
-                        System.out.printf(" [%s - %s] - FIM PROCESSAMENTO %n", task.getId(), task.getUrl() );
+                        txtMsg.setText( format( " [%s - %s] - FIM PROCESSAMENTO %n", task.getId(), task.getUrl() ) );
                         return new Pair<>(task.getId(), "");
                     } catch (InterruptedException e) {
                         return new Pair<>(task.getId(), e.getMessage());
