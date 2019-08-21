@@ -1,5 +1,6 @@
 package br.com.arcom.powerbatch.controllers;
 
+import br.com.arcom.powerbatch.infra.util.UtilDate;
 import br.com.arcom.powerbatch.models.domains.PlbEscalonamento;
 import br.com.arcom.powerbatch.models.repository.PlbEscalonamentoRepository;
 import com.google.inject.Inject;
@@ -10,7 +11,9 @@ import javafx.scene.control.TextField;
 import javafx.util.Pair;
 
 import javax.persistence.EntityManager;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.CompletableFuture;
@@ -43,6 +46,7 @@ public class AgenteController extends TimerTask {
 
     // UI - Controles
     @FXML private Button btnPrincipal;
+    @FXML private TextField txtProxExecucao;
     @FXML private TextField txtMaxThreads;
     @FXML private TextField txtEmExecucao;
     @FXML private TextField txtDisponivel;
@@ -74,8 +78,14 @@ public class AgenteController extends TimerTask {
 
     public void handleBtnPrincipal( final ActionEvent actionEvent ) {
 
-        btnPrincipal.setText("Cancelar");
-        timer.schedule(this, 0 , 5000 );
+        if ( Objects.equals(btnPrincipal.getText(),"STOP" ) ) {
+            btnPrincipal.setText("START");
+            timer.cancel();
+        } else {
+            btnPrincipal.setText("STOP");
+            timer.schedule(this, 0 , 5000 );
+            txtProxExecucao.setText(UtilDate.convString( LocalDateTime.now().plusSeconds(5)) );
+        }
     }
 
     @Override
@@ -112,7 +122,7 @@ public class AgenteController extends TimerTask {
 
             if ( reservouProcesso ) {
 
-                qtQueueExecucao.incrementAndGet();
+                txtEmExecucao.setText( valueOf( qtQueueExecucao.incrementAndGet() ) );
 
                 CompletableFuture.supplyAsync( () -> {
                     try {
@@ -137,7 +147,7 @@ public class AgenteController extends TimerTask {
                             em.getTransaction().rollback();
                         }
                     })
-                    .thenRun(() -> qtQueueExecucao.decrementAndGet() );
+                    .thenRun(() -> txtEmExecucao.setText( valueOf( qtQueueExecucao.decrementAndGet() ) ) );
             }
         }
     }

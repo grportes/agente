@@ -6,16 +6,18 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="378.0" prefWidth="624.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.arcom.powerbatch.controllers.AgenteController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="370.0" prefWidth="624.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.arcom.powerbatch.controllers.AgenteController">
     <children>
-        <Button fx:id="btnPrincipal" layoutX="502.0" layoutY="230.0" mnemonicParsing="false" onAction="#handleBtnPrincipal" prefHeight="59.0" prefWidth="104.0" text="INICIAR..." />
-        <ListView layoutX="21.0" layoutY="18.0" prefHeight="306.0" prefWidth="468.0" />
-      <Label layoutX="502.0" layoutY="18.0" text="Nro de Threads:" />
-      <Label layoutX="502.0" layoutY="80.0" text="Em Execuçao:" />
-      <Label layoutX="502.0" layoutY="147.0" text="Disponiveis:" />
-      <TextField fx:id="txtMaxThreads" alignment="CENTER" disable="true" editable="false" layoutX="500.0" layoutY="41.0" prefHeight="26.0" prefWidth="104.0" />
-      <TextField fx:id="txtEmExecucao" alignment="CENTER" disable="true" layoutX="500.0" layoutY="103.0" prefHeight="26.0" prefWidth="104.0" />
-      <TextField fx:id="txtDisponivel" alignment="CENTER" disable="true" layoutX="500.0" layoutY="170.0" prefHeight="26.0" prefWidth="104.0" />
-      <TextField fx:id="txtMsg" alignment="CENTER" disable="true" layoutX="21.0" layoutY="334.0" prefHeight="26.0" prefWidth="468.0" />
+        <Button fx:id="btnPrincipal" layoutX="501.0" layoutY="294.0" mnemonicParsing="false" onAction="#handleBtnPrincipal" prefHeight="59.0" prefWidth="104.0" text="START" />
+        <ListView layoutX="11.0" layoutY="11.0" prefHeight="306.0" prefWidth="468.0" />
+      <Label layoutX="502.0" layoutY="84.0" text="Nro de Threads:" />
+      <Label layoutX="502.0" layoutY="151.0" text="Em Execuçao:" />
+      <Label layoutX="502.0" layoutY="218.0" text="Disponiveis:" />
+      <TextField fx:id="txtMaxThreads" alignment="CENTER" disable="true" editable="false" layoutX="500.0" layoutY="102.0" prefHeight="26.0" prefWidth="104.0" />
+      <TextField fx:id="txtEmExecucao" alignment="CENTER" disable="true" layoutX="500.0" layoutY="169.0" prefHeight="26.0" prefWidth="104.0" />
+      <TextField fx:id="txtDisponivel" alignment="CENTER" disable="true" layoutX="500.0" layoutY="236.0" prefHeight="26.0" prefWidth="104.0" />
+      <TextField fx:id="txtMsg" alignment="CENTER" disable="true" layoutX="12.0" layoutY="328.0" prefHeight="26.0" prefWidth="468.0" />
+      <TextField fx:id="txtProxExecucao" alignment="CENTER" disable="true" layoutX="501.0" layoutY="48.0" prefHeight="26.0" prefWidth="104.0" />
+      <Label layoutX="502.0" layoutY="24.0" text="Prox. Leitura:" />
     </children>
 </Pane>
