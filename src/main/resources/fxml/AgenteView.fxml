@@ -6,7 +6,7 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="543.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.arcom.powerbatch.controllers.AgenteController">
     <children>
-        <Button layoutX="21.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleBtnPrincipal" prefHeight="59.0" prefWidth="497.0" text="INICIAR..." />
+        <Button fx:id="btnPrincipal" layoutX="21.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleBtnPrincipal" prefHeight="59.0" prefWidth="497.0" text="INICIAR..." />
         <ListView layoutX="21.0" layoutY="81.0" prefHeight="306.0" prefWidth="497.0" />
     </children>
 </Pane>
